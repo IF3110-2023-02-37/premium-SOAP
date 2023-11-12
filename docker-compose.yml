@@ -1,0 +1,24 @@
+version: '3.7'
+services:
+  soap-mysql:
+    image: mysql:8.0
+    ports:
+      - "3310:3306"
+    volumes:
+      - mysql-data:/var/lib/mysql
+    env_file:
+      - .env-db
+
+  soap-phpmyadmin:
+    image: phpmyadmin/phpmyadmin
+    ports:
+      - '8085:80'
+    restart: always
+    environment:
+      PMA_HOST: soap-mysql
+      UPLOAD_IMAGE: 300M
+    depends_on:
+      - soap-mysql
+
+volumes:
+  mysql-data:
