@@ -4,6 +4,7 @@ import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.SQLException;
 import java.sql.Statement;
+import java.util.Map;
 
 public class DatabaseSeeder {
 
@@ -11,9 +12,11 @@ public class DatabaseSeeder {
 
         String url = System.getenv("DB_URL");
         String username = "root";
-        String password = System.getenv("DB_ROOT_PASS");;
+        String password = System.getenv("DB_ROOT_PASS");
 
-        try (Connection connection = DriverManager.getConnection(url, username, password)) {
+        try {
+            Connection connection = DriverManager.getConnection(url, username, password);
+
             // Create tables
             createSubscriptionTable(connection);
             createLogTable(connection);
@@ -31,9 +34,10 @@ public class DatabaseSeeder {
     private static void createSubscriptionTable(Connection connection) throws SQLException {
         try (Statement statement = connection.createStatement()) {
             statement.executeUpdate("CREATE TABLE subscription (" +
-                    "podcaster_username VARCHAR(255) PRIMARY KEY," +
-                    "subscriber_username VARCHAR(255) PRIMARY KEY," +
+                    "podcaster_username VARCHAR(255)," +
+                    "subscriber_username VARCHAR(255)," +
                     "status VARCHAR(50) NOT NULL," +
+                    "PRIMARY KEY (podcaster_username, subscriber_username)," +
                     "CHECK (status IN ('pending', 'accepted', 'rejected'))" +
                     ");");
         }
@@ -55,7 +59,7 @@ public class DatabaseSeeder {
             statement.executeUpdate("CREATE TABLE apikey (" +
                     "apikey_id INT AUTO_INCREMENT PRIMARY KEY," +
                     "apikey_value VARCHAR(255) NOT NULL," +
-                    "apikey_owner VARCHAR(255) NOT NULL," +
+                    "apikey_owner VARCHAR(255) NOT NULL" +
                     ");");
         }
     }
@@ -76,13 +80,13 @@ public class DatabaseSeeder {
                     "('getSubs', '192.168.1.11')," +
                     "('createSubs', '192.168.1.13')," +
                     "('unknown', '192.168.10.128')" +
-                    "");
+                    ";");
 
             // Insert sample data into the 'apikey' table
             statement.executeUpdate("INSERT INTO apikey (apikey_value, apikey_owner) VALUES " +
-                    "('xuyewPk6NDlBewftLtHJVf=PAb3', 'Milestone 2 REST Service)," +
-                    "('gB9ACm8r5RZOBiN5ske9cBVjlVf', 'PHP Base App)," +
-                    "");
+                    "('xuyewPk6NDlBewftLtHJVf=PAb3', 'Milestone 2 REST Service')," +
+                    "('gB9ACm8r5RZOBiN5ske9cBVjlVf', 'PHP Base App')" +
+                    ";");
         }
     }
 }
