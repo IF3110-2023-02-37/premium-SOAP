@@ -1,5 +1,4 @@
-import route.Routing;
-import endpoint.Subscription;
+import endpoint.SubscriptionEnd;
 
 import javax.xml.ws.Endpoint;
 
@@ -8,7 +7,7 @@ public class ServerJWS {
 
         try{
             String address="http://localhost:8090/subscription";
-            Endpoint.publish(address, new Subscription());
+            Endpoint.publish(address, new SubscriptionEnd());
             System.out.println("Running on Address : " + address);
         } catch (Exception e){
             e.printStackTrace();
