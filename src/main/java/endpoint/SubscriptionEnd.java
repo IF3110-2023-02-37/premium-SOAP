@@ -7,6 +7,7 @@ import javax.jws.WebMethod;
 import javax.jws.WebParam;
 import javax.jws.WebResult;
 import javax.jws.WebService;
+import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.util.ArrayList;
 import java.util.List;
@@ -18,10 +19,10 @@ public class SubscriptionEnd {
 
         DatabaseConnect connection = new DatabaseConnect();
         List<Subscription> subs = new ArrayList<>();
-        String query = "SELECT * FROM subscription WHERE podcaster_username = '" + podcaster + "';";
+        String query = "SELECT * FROM subscription WHERE podcaster_username = ?;";
 
         try{
-            ResultSet subsFromDatabase = connection.execute(query);
+            ResultSet subsFromDatabase = connection.execute(query, podcaster);
             subs = Subscription.setToList(subsFromDatabase);
         } catch (Exception e) {
             e.printStackTrace();
@@ -35,10 +36,10 @@ public class SubscriptionEnd {
         DatabaseConnect connection = new DatabaseConnect();
         List<Subscription> subs = new ArrayList<>();
         String query = "SELECT * FROM subscription WHERE "+
-                "status = 'pending' AND podcaster_username = '" + podcaster + "';";
+                "status = 'pending' AND podcaster_username = ?;";
 
         try{
-            ResultSet subsFromDatabase = connection.execute(query);
+            ResultSet subsFromDatabase = connection.execute(query,podcaster);
             subs = Subscription.setToList(subsFromDatabase);
         } catch (Exception e) {
             e.printStackTrace();
@@ -70,10 +71,10 @@ public class SubscriptionEnd {
         int rowAffected = 0;
 
         String query = "UPDATE subscription SET status = 'accepted' " +
-                        "WHERE podcaster_username = '" + podcaster + "' AND " +
-                        "subscriber_username = '"+ subscriber +"'; ";
+                        "WHERE podcaster_username = ? AND " +
+                        "subscriber_username = ?; ";
         try {
-            rowAffected = connection.update(query);
+            rowAffected = connection.update(query,podcaster, subscriber);
         } catch (Exception e){
             e.printStackTrace();
         }
@@ -91,10 +92,10 @@ public class SubscriptionEnd {
         int rowAffected = 0;
 
         String query = "UPDATE subscription SET status = 'rejected' " +
-                "WHERE podcaster_username = '" + podcaster + "' AND " +
-                "subscriber_username = '"+ subscriber +"'; ";
+                "WHERE podcaster_username = ? AND " +
+                "subscriber_username = ?; ";
         try {
-            rowAffected = connection.update(query);
+            rowAffected = connection.update(query,podcaster,subscriber);
         } catch (Exception e){
             e.printStackTrace();
         }
@@ -114,6 +115,49 @@ public class SubscriptionEnd {
         int rowAffected = 0;
         try{
             rowAffected = newSubs.saveToDatabase(connection);
+        } catch (Exception e){
+            e.printStackTrace();
+        }
+
+        if(rowAffected > 0){
+            response = "success";
+        }
+
+        return response;
+    }
+
+    // DELETE endpoint for cascading deletion
+    @WebMethod
+    public String deleteSubsPodcaster(@WebParam(name = "podcaster") String podcaster){
+
+        String response = "failed";
+        DatabaseConnect connection = new DatabaseConnect();
+        String query = "DELETE FROM subscription WHERE podcaster_username = ?";
+        int rowAffected = 0;
+
+        try{
+            rowAffected = connection.update(query, podcaster);
+        } catch (Exception e){
+            e.printStackTrace();
+        }
+
+        if(rowAffected > 0){
+            response = "success";
+        }
+
+        return response;
+    }
+
+    @WebMethod
+    public String deleteSubsSubscriber(@WebParam(name = "subscriber") String subscriber){
+
+        String response = "failed";
+        DatabaseConnect connection = new DatabaseConnect();
+        String query = "DELETE FROM subscription WHERE subscriber_username = ?";
+        int rowAffected = 0;
+
+        try{
+            rowAffected = connection.update(query, subscriber);
         } catch (Exception e){
             e.printStackTrace();
         }

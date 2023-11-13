@@ -36,12 +36,9 @@ public class Subscription {
     public int saveToDatabase(DatabaseConnect connect) throws SQLException{
         int rowAffected = 0;
         String query = "INSERT INTO subscription (podcaster_username,subscriber_username,status) " +
-                "VALUES ('" +
-                podcaster_username + "','" +
-                subscriber_username + "','" +
-                status + "');";
+                "VALUES (?,?,?);";
 
-        rowAffected = connect.update(query);
+        rowAffected = connect.update(query,podcaster_username,subscriber_username,status);
         System.out.println(rowAffected);
         return rowAffected;
     }

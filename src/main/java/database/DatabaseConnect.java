@@ -18,18 +18,32 @@ public class DatabaseConnect {
         }
     }
 
-    public ResultSet execute(String query) throws SQLException{
+    public ResultSet execute(String query, Object... parameters) throws SQLException{
 
-        Statement statement = connection.createStatement();
-        return statement.executeQuery(query);
+        PreparedStatement preparedStatement = connection.prepareStatement(query);
+        setParameter(preparedStatement, parameters);
+        return preparedStatement.executeQuery();
 
     }
 
-    public int update(String query) throws SQLException{
+    public int update(String query, Object... parameters) throws SQLException{
 
-        Statement statement = connection.createStatement();
-        return statement.executeUpdate(query);
+        PreparedStatement preparedStatement = connection.prepareStatement(query);
+        setParameter(preparedStatement, parameters);
+        return preparedStatement.executeUpdate();
 
+    }
+
+    private void setParameter(PreparedStatement statement, Object... parameters) throws SQLException {
+        for (int i = 1; i < parameters.length+1; i++) {
+            Object parameter = parameters[i-1];
+
+            if (parameter instanceof String) {
+                statement.setString(i, (String) parameter);
+            } else if (parameter instanceof Integer) {
+                statement.setInt(i, (Integer) parameter);
+            }
+        }
     }
 
 }
