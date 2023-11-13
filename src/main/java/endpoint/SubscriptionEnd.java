@@ -30,7 +30,7 @@ public class SubscriptionEnd {
 
         return subs;
     }
-
+    @WebMethod
     public List<Subscription> getPendingSubs(@WebParam(name = "podcaster") String podcaster ) {
 
         DatabaseConnect connection = new DatabaseConnect();
@@ -63,7 +63,7 @@ public class SubscriptionEnd {
 
         return subs;
     }
-
+    @WebMethod
     public String acceptSubs(@WebParam(name = "podcaster") String podcaster,
                              @WebParam(name= "subscriber") String subscriber) {
         DatabaseConnect connection = new DatabaseConnect();
@@ -84,7 +84,7 @@ public class SubscriptionEnd {
         }
         return response;
     }
-
+    @WebMethod
     public String rejectSubs(@WebParam(name = "podcaster") String podcaster,
                              @WebParam(name= "subscriber") String subscriber) {
         DatabaseConnect connection = new DatabaseConnect();
