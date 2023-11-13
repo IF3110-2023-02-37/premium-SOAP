@@ -1,5 +1,8 @@
 package model;
 
+import database.DatabaseConnect;
+
+import java.sql.Connection;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
@@ -29,4 +32,18 @@ public class Subscription {
         }
         return subscriptionList;
     }
+
+    public int saveToDatabase(DatabaseConnect connect) throws SQLException{
+        int rowAffected = 0;
+        String query = "INSERT INTO subscription (podcaster_username,subscriber_username,status) " +
+                "VALUES ('" +
+                podcaster_username + "','" +
+                subscriber_username + "','" +
+                status + "');";
+
+        rowAffected = connect.update(query);
+        System.out.println(rowAffected);
+        return rowAffected;
+    }
+
 }
