@@ -10,6 +10,10 @@ public class DatabaseConnect {
         String username = "root";
         String password = System.getenv("DB_ROOT_PASS");
 
+        System.out.println(url);
+        System.out.println(username);
+        System.out.println(password);
+
         try {
             this.connection = DriverManager.getConnection(url, username, password);
         }

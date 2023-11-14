@@ -16,7 +16,6 @@ import java.util.List;
 @HandlerChain(file = "handler-config.xml")
 public class SubscriptionEnd {
 
-
     @WebMethod
     public List<Subscription> getSubs(@WebParam(name = "podcaster") String podcaster ) {
 

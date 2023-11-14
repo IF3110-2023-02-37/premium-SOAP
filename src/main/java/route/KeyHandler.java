@@ -1,4 +1,4 @@
-package handler;
+package route;
 import model.Key;
 
 import javax.mail.Message;

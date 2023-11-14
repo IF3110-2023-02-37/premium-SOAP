@@ -18,8 +18,11 @@
 #
 #CMD tail -f /dev/null
 
-FROM amazoncorretto:8
+FROM maven:3.6.3-amazoncorretto-8
 COPY ./target /app
 WORKDIR /app
-EXPOSE 8090
-ENTRYPOINT
+COPY . .
+RUN mvn clean compile assembly:single
+CMD ["java", "-jar", "target/premium-SOAP-1.0-SNAPSHOT-jar-with-dependencies.jar"]
+#EXPOSE 8090
+#ENTRYPOINT
