@@ -1,4 +1,4 @@
-package route;
+package handler;
 
 import javax.jws.WebMethod;
 import javax.jws.WebParam;
