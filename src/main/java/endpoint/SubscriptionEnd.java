@@ -3,17 +3,20 @@ package endpoint;
 import database.DatabaseConnect;
 import model.Subscription;
 
-import javax.jws.WebMethod;
-import javax.jws.WebParam;
-import javax.jws.WebResult;
-import javax.jws.WebService;
+import javax.annotation.Resource;
+import javax.jws.*;
+import javax.xml.ws.WebServiceContext;
+import javax.xml.ws.handler.MessageContext;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.util.ArrayList;
 import java.util.List;
 
 @WebService
+@HandlerChain(file = "handler-config.xml")
 public class SubscriptionEnd {
+
+
     @WebMethod
     public List<Subscription> getSubs(@WebParam(name = "podcaster") String podcaster ) {
 
@@ -61,6 +64,7 @@ public class SubscriptionEnd {
             e.printStackTrace();
         }
 
+        //System.out.println(this.wsContext.getMessageContext().get("Source"));
         return subs;
     }
     @WebMethod
