@@ -23,7 +23,7 @@ services:
     restart: on-failure
     env_file: .env
     ports:
-      - '1233:1233'
+      - '8091:8091'
     stdin_open: true
     tty: true
   soap-phpmyadmin:
