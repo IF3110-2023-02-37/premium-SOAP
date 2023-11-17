@@ -33,6 +33,22 @@ public class SubscriptionEnd {
         return subs;
     }
     @WebMethod
+    public List<Subscription> getSubsWithSubscriber(@WebParam(name = "subscriber") String subscriber ) {
+
+        DatabaseConnect connection = new DatabaseConnect();
+        List<Subscription> subs = new ArrayList<>();
+        String query = "SELECT * FROM subscription WHERE subscriber_username = ?;";
+
+        try{
+            ResultSet subsFromDatabase = connection.execute(query, subscriber);
+            subs = Subscription.setToList(subsFromDatabase);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+
+        return subs;
+    }
+    @WebMethod
     public List<Subscription> getPendingSubs(@WebParam(name = "podcaster") String podcaster ) {
 
         DatabaseConnect connection = new DatabaseConnect();
