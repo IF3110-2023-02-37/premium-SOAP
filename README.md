@@ -34,7 +34,7 @@ Berikut merupakan daftar requirements untuk aplikasi:
 ## Endpoint API
 | Method        | Endpoint           | Fungsi  |
 | --- |---| ---|
-| GET | getSubs | mendapatkan informasi langganan (_subscriptions_) berdasarkan podcaster tertentu dan memanggil seluruh method yang ada pada SOAP service (getSubs, getSubsWithSubscriber, getPendingSubs, getAllSubs, acceptSubs, rejectSubs, createPendingSubs, deleteSubsPodcaster, deleteSubsSubscriber |
+| GET | getSubs | mendapatkan informasi langganan (_subscriptions_) berdasarkan podcaster tertentu dan memanggil seluruh method yang ada pada SOAP service (getSubs, getSubsWithSubscriber, getPendingSubs, getAllSubs, acceptSubs, rejectSubs, createPendingSubs, deleteSubsPodcaster, deleteSubsSubscriber) |
 
 ## Pembagian Tugas
 - database seeder : 13521050
