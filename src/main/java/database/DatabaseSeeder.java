@@ -10,7 +10,7 @@ public class DatabaseSeeder {
 
     public static void main(String[] args) {
 
-        String url = System.getenv("DB_URL");
+        String url = System.getenv("DB_URL_DOCKER");
         String username = "root";
         String password = System.getenv("DB_ROOT_PASS");
 
