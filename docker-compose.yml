@@ -1,7 +1,7 @@
 version: '3.7'
 services:
   soap-mysql:
-    image: mysql:8.0
+    image: mysql:5.7
     ports:
       - "3311:3306"
     volumes:
