@@ -65,6 +65,23 @@ public class SubscriptionEnd {
 
         return subs;
     }
+    @WebMethod
+    public List<Subscription> getAllPendingSubs() {
+
+        DatabaseConnect connection = new DatabaseConnect();
+        List<Subscription> subs = new ArrayList<>();
+        String query = "SELECT * FROM subscription WHERE "+
+                "status = 'pending';";
+
+        try{
+            ResultSet subsFromDatabase = connection.execute(query);
+            subs = Subscription.setToList(subsFromDatabase);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+
+        return subs;
+    }
 
     @WebMethod
     public List<Subscription> getAllSubs() {
