@@ -3,7 +3,7 @@ services:
   soap-mysql:
     image: mysql:8.0
     ports:
-      - "3306:3306"
+      - "3311:3306"
     volumes:
       - mysql-data:/var/lib/mysql
     env_file:
